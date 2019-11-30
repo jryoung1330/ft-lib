@@ -1,6 +1,5 @@
 package com.foodtraffic.model.dto;
 
-
 import lombok.Data;
 
 @Data
