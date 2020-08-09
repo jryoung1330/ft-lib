@@ -15,7 +15,4 @@ public class EmployeeRequest {
 
     private boolean isAdmin;
 
-    private boolean isOwner;
-
-    private Integer status;
 }

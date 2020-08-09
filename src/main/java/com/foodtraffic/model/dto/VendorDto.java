@@ -1,17 +1,21 @@
 package com.foodtraffic.model.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
-public class FoodTruckDto {
+public class VendorDto {
 
-    private Long id;
+    private long id;
 
-    private String name;
+    private String userName;
+    
+    private String displayName;
 
-    private Double longitude;
+    private double longitude;
 
-    private Double latitude;
+    private double latitude;
 
     private String streetAddress;
 
@@ -26,5 +30,9 @@ public class FoodTruckDto {
     private String locationDetails;
 
     private String description;
-
+    
+    private String status;
+    
+    private List<TagDto> tags;
+    
 }

@@ -13,5 +13,5 @@ public class UserDto {
 
     private String username;
 
-    private List<FoodTruckDto> favorites;
+    private List<VendorDto> favorites;
 }
