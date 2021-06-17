@@ -9,7 +9,7 @@ public class MenuDto {
 
 	private Long id;
 
-	private Long foodTruckId;
+	private Long vendorId;
 
 	private String description;
 

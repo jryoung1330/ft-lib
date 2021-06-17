@@ -13,6 +13,8 @@ public class VendorDto {
     
     private String displayName;
 
+    private String company;
+
     private double longitude;
 
     private double latitude;
@@ -32,6 +34,10 @@ public class VendorDto {
     private String description;
     
     private String status;
+
+    private long owner;
+
+    private String profileImage;
     
     private List<TagDto> tags;
     
