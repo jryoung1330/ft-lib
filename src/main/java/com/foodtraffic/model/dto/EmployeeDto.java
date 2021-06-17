@@ -7,14 +7,9 @@ public class EmployeeDto {
 
 	private long userId;
 	
-	private long foodTruckId;
+	private long vendorId;
 	
     private boolean isAssociate;
 
     private boolean isAdmin;
-
-    private boolean isOwner;
-
-    private String status;
-
 }
