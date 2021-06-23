@@ -13,5 +13,7 @@ public class UserDto {
 
     private String username;
 
+    private EmployeeDto employee;
+
     private List<VendorDto> favorites;
 }
