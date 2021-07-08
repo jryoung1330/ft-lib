@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class EmployeeDto {
 
-	private long userId;
-	
+	private long employeeId;
+
 	private long vendorId;
 	
     private boolean isAssociate;

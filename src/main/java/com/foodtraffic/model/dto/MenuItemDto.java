@@ -17,8 +17,6 @@ public class MenuItemDto {
 	
 	private Integer calories;
 	
-	private String ingredients;
-	
 	private String remarks;
 	
 	private boolean isVegan;

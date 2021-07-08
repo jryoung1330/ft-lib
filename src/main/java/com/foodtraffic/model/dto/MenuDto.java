@@ -11,6 +11,8 @@ public class MenuDto {
 
 	private Long vendorId;
 
+	private String name;
+
 	private String description;
 
 	private List<MenuItemDto> menuItems;
