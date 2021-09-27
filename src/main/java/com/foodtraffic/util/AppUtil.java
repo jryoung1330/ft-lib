@@ -6,8 +6,13 @@ import com.foodtraffic.model.dto.MenuDto;
 import com.foodtraffic.model.dto.UserDto;
 import com.foodtraffic.model.response.ErrorResponse;
 import feign.FeignException;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 
 public class AppUtil {
 
@@ -25,5 +30,29 @@ public class AppUtil {
         } catch (FeignException e) {
             throw ErrorResponse.responseException(e.status(), e.getMessage());
         }
+    }
+
+    public static Object mergeObject(JpaRepository<?, Long> repo, Object updatedObject, Long id) {
+        Object mergedObject = null;
+        Optional<?> optionalObject = repo.findById(id);
+
+        if(optionalObject.isPresent()) {
+            mergedObject = optionalObject.get();
+
+            try {
+                for (Field f : updatedObject.getClass().getDeclaredFields()) {
+                    f.setAccessible(true);
+                    if(f.get(updatedObject) != null) {
+                        f.set(mergedObject, f.get(updatedObject));
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return mergedObject;
     }
 }
