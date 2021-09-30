@@ -15,5 +15,7 @@ public class MenuDto {
 
 	private String description;
 
+	private Integer displayOrder;
+
 	private List<MenuItemDto> menuItems;
 }
