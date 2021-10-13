@@ -6,6 +6,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 public class ErrorUtil {
+
     public static ResponseStatusException responseException(int status, String message) {
         log.error(message);
         if(status == 0) {

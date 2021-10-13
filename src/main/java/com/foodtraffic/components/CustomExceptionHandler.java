@@ -52,7 +52,7 @@ public class CustomExceptionHandler {
         res.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
         return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
+  
     private String getConstraintViolations(ConstraintViolationException e) {
         StringBuilder violations = new StringBuilder();
         for(ConstraintViolation<?> cv : e.getConstraintViolations()) {

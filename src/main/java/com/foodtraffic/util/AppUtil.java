@@ -20,7 +20,7 @@ public class AppUtil {
         try {
             return userClient.checkAccessHeader(accessToken);
         } catch (FeignException e) {
-            throw ErrorResponse.responseException(e.status(), e.getMessage());
+            throw ErrorUtil.responseException(e.status(), e.getMessage());
         }
     }
 
@@ -28,7 +28,7 @@ public class AppUtil {
         try {
             return vendorClient.getMenusForVendor(vendorId);
         } catch (FeignException e) {
-            throw ErrorResponse.responseException(e.status(), e.getMessage());
+            throw ErrorUtil.responseException(e.status(), e.getMessage());
         }
     }
 
