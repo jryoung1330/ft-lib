@@ -3,7 +3,6 @@ package com.foodtraffic.model.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 
 @Data
@@ -17,11 +16,17 @@ public class OperationItemDto {
 
     private boolean isClosed;
 
-    private String reason;
-
-    private LocalDate date;
-
     private String openTime;
 
     private String closeTime;
+
+    private boolean isEvent;
+
+    private String eventName;
+
+    private String eventUrl;
+
+    private LocalDate eventStartDate;
+
+    private LocalDate eventEndDate;
 }
