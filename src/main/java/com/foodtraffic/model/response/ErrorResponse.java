@@ -1,7 +1,6 @@
 package com.foodtraffic.model.response;
 
 import lombok.Data;
-
 import java.time.ZonedDateTime;
 
 @Data

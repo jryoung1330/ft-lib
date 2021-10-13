@@ -10,10 +10,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.RollbackException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @Component
 @ControllerAdvice
@@ -39,6 +38,21 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<ErrorResponse> catchAll(Exception e, WebRequest request) {
+        if(e.getCause() instanceof RollbackException && e.getCause().getCause() != null
+                && e.getCause().getCause() instanceof ConstraintViolationException) {
+            return handleValidationExceptions((ConstraintViolationException) e.getCause().getCause(), request);
+        }
+
+        ErrorResponse res = new ErrorResponse();
+        res.setError("Internal Server Error");
+        res.setMessage("An unknown error has occurred");
+        res.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        res.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
+        return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  
     private String getConstraintViolations(ConstraintViolationException e) {
         StringBuilder violations = new StringBuilder();
         for(ConstraintViolation<?> cv : e.getConstraintViolations()) {
