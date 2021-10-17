@@ -38,6 +38,8 @@ public class VendorDto {
     private long owner;
 
     private String profileImage;
+
+    private boolean isOnline;
     
     private List<TagDto> tags;
     
