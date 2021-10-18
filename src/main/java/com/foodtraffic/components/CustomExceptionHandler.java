@@ -1,9 +1,11 @@
 package com.foodtraffic.components;
 
 import com.foodtraffic.model.response.ErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -13,9 +15,11 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.RollbackException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.Arrays;
 
 @Component
 @ControllerAdvice
+@Slf4j
 public class CustomExceptionHandler {
 
     @ExceptionHandler(ResponseStatusException.class)
@@ -38,6 +42,16 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public final ResponseEntity<ErrorResponse> handleGeneralBadRequestExceptions(Exception e, WebRequest request) {
+        ErrorResponse res = new ErrorResponse();
+        res.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        res.setMessage(e.getMessage());
+        res.setStatus(HttpStatus.BAD_REQUEST.value());
+        res.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
+        return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ErrorResponse> catchAll(Exception e, WebRequest request) {
         if(e.getCause() instanceof RollbackException && e.getCause().getCause() != null
@@ -45,6 +59,7 @@ public class CustomExceptionHandler {
             return handleValidationExceptions((ConstraintViolationException) e.getCause().getCause(), request);
         }
 
+        log.error(Arrays.toString(e.getStackTrace()));
         ErrorResponse res = new ErrorResponse();
         res.setError("Internal Server Error");
         res.setMessage("An unknown error has occurred");

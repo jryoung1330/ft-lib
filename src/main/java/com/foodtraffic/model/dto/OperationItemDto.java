@@ -10,7 +10,7 @@ public class OperationItemDto {
 
     private long id;
 
-    private long operationId;
+    private long vendorId;
 
     private String dayOfWeek;
 
