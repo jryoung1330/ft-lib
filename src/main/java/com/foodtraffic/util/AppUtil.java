@@ -4,7 +4,6 @@ import com.foodtraffic.client.UserClient;
 import com.foodtraffic.client.VendorClient;
 import com.foodtraffic.model.dto.MenuDto;
 import com.foodtraffic.model.dto.UserDto;
-import com.foodtraffic.model.response.ErrorResponse;
 import feign.FeignException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class AppUtil {
+
+    public static int TOKEN_PREFIX = 7;
 
     public static UserDto getUser(UserClient userClient, String accessToken) {
         try {
@@ -51,6 +52,21 @@ public class AppUtil {
             }
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return mergedObject;
+    }
+
+    public static Object mergeObject(Object updatedObject, Object mergedObject) {
+        try {
+            for (Field f : updatedObject.getClass().getDeclaredFields()) {
+                f.setAccessible(true);
+                if(f.get(updatedObject) != null) {
+                    f.set(mergedObject, f.get(updatedObject));
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return mergedObject;
