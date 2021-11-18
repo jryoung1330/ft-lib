@@ -4,6 +4,7 @@ import com.foodtraffic.client.UserClient;
 import com.foodtraffic.client.VendorClient;
 import com.foodtraffic.model.dto.MenuDto;
 import com.foodtraffic.model.dto.UserDto;
+import com.foodtraffic.model.response.Payload;
 import feign.FeignException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
@@ -71,4 +72,5 @@ public class AppUtil {
 
         return mergedObject;
     }
+
 }
